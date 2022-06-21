@@ -25,7 +25,7 @@
 #ifndef MAGIC_DISTILLER_SYSTEMINFOSCREEN_H
 #define MAGIC_DISTILLER_SYSTEMINFOSCREEN_H
 
-//#include <esp_netif.h>
+#include <esp_netif.h>
 #include "Distiller.h"
 #include "../hw/DisplayHelper.h"
 #include "Buzzer.h"
@@ -37,9 +37,9 @@ class SystemInfoScreen : public Distiller {
         DisplayHelper::Clear();
         DisplayHelper::Print(0,8,"System info:");
 
-//        tcpip_adapter_ip_info_t ipInfo;
-//        tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ipInfo);
-//        DisplayHelper::PrintFmt(0,16,"IP: " IPSTR, IP2STR(&ipInfo.ip));
+        tcpip_adapter_ip_info_t ipInfo;
+        tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ipInfo);
+        DisplayHelper::PrintFmt(0,16,"IP: " IPSTR, IP2STR(&ipInfo.ip));
 
         DisplayHelper::PrintFmt(0,32,"any btn to return");
     }

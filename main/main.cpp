@@ -43,6 +43,7 @@
 #include "ssd1306.h"
 #include "buttons.h"
 #include "states/Greeting.h"
+#include "wifi.h"
 
 static const char *TAG = "main";
 
@@ -161,6 +162,15 @@ extern "C" void app_main() {
 
     init_buttons();
     Distiller::buzzer.init(BUZZER_GPIO);
+
+    // Initialize NVS
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+    wifi_init();
 
     ESP_LOGI(TAG, "initializing distiller state machine");
 
